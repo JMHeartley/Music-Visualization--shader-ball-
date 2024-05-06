@@ -47,7 +47,7 @@ function draw() {
 
   drawingContext.filter = 'blur(px)';
 
-  console.log(audio.currentTime());
+  // console.log(audio.currentTime());
 
   // stroke(255)
 
