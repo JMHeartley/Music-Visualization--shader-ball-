@@ -12,7 +12,7 @@ let jitter = 0.0;
 
 function preload() {
   audio = loadSound('audio/Are you gonna dance or what.mp3');
-  myShader = loadShader('shader/vertex.vert', 'shader/fragment.frag');
+  myShader = loadShader('shader/vertex.vert', 'shader/fragment2.frag');
   frameRate(60);
 }
 
@@ -22,6 +22,13 @@ function setup() {
   shader(myShader);
   // getAudioContext().suspend()
   // audio.setVolume(0.1)
+  setGradient([
+    [0.0, 0.0, 1.0],
+    [0.0, 1.0, 0.0],
+    [1.0, 1.0, 0.0],
+    [0.0, 0.0, 0.0],
+    [1.0, 0.0, 0.0]
+  ]);
 
   userStartAudio();
 
@@ -106,3 +113,17 @@ function mousePressed() {
 // function peakDetected() {
 //   console.log('peak detected')
 // }
+
+function setGradient(colors) {
+  const positionStep = 1.0 / (colors.length - 1);
+  for (let index = 0; index < colors.length; index++) {
+
+    let uniformName = `color${index + 1}`;
+    myShader.setUniform(uniformName, colors[index]);
+    // console.log(uniformName, colors[i]);
+
+    let positionName = `position${index + 1}`;
+    myShader.setUniform(positionName, positionStep * (index));
+    // console.log(positionName, positionStep * (i));
+  }
+}
